@@ -9,33 +9,11 @@ output: pdf_document
 ```{r}
 #Assignment 2
 #Dan Brooks
-#This program will be used to calculate the choose function (nCr). It taked the total population "n" and
-#picks a subpopulation "r" from that population. It them calculates how many possible combinations are
-#there for picking "r" objects from "n" total objects (order doesn't matter)
+#This program will be used to calculate the choose function (xCy). It taked the total population "x" and
+#picks a subpopulation "y" from that population. It them calculates how many possible combinations are
+#there for picking "y" objects from "x" total objects (order doesn't matter)
 
-#readpopulation function has no parameters being passed to it and returns an integer value:
-     #Promots the user to enter in the total popluation for the problem
-     #Returns the population that was entered by the user
-readpopulation <- function()
-{
-  population <- readline(prompt = "Please enter the total poplulation: ")
-  return(population) 
-}
 
-#A variable that will hold the input from the readpopulation function
-pr <- as.integer(readpopulation())
-
-#readchoice function has no parameters being passed to it and returns an integer value
-     #Prompts the user to enter in the amount they would like to choose from the total population
-     #Returns the amount the user chose out of the total population
-readchoice <- function()
-{
-  choice <- readline(prompt = "Please enter the choice of of the total population: ")
-  return(choice)
-}
-
-#A variable that will hold the input from the readchoice function
-cr <- as.integer(readchoice())
 
 #factorial function will take one parameter being passed to it and returns an integer value
      #This function will calculate the fatorial (!) of the value that is passed to it
@@ -78,31 +56,74 @@ Diffactorial <- function(x, y)
 }
   
 #Choose function will take in two parameters being pased to it and calculate the combination of the two numbers
-     #The function will calculate the combination of the two numbers that were inputted from the user
+     #The function will calculate the combination of the two numbers that were inputed from the user
      #It will take the factorial of the population (factorial(x)) and divide it by the factorial of the 
           #difference of the population and the number of choices (Diffactorial(x,y)) times the factorial
           #of the number of choices (factorial(y)).
-     #It will give the anser for the total number of combinations for the number of choices out of a given 
+     #It will give the answer for the total number of combinations for the number of choices out of a given 
      #population.
+     #There is error checking to make sure that the input the user places into the function will be valid.
+          #If the population (x) is less then the number of items that you are choosing (y) the output 
+          #will be zero because.
+          #If (x) is greater than 0 and (y) is equal 0 then the output will be 1 because choosing no objects out
+          #a population means that their is still the population, just one choice.
+          #If (x) and (y) are the same then the output will be one because there is ony one way to pick (y) items 
+          #out of a population of (x) items if they are the same.
 Choosefinal <- function (x, y)
 {
-  factorial(x)/(Diffactorial(x,y)*factorial(y))
+  if (x < y)
+  {
+    print (0)
+  }
+  else 
+  {
+    if (x > 0 && y == 0)
+    {
+      print(1)
+    }
+    else
+    {
+      if (x == y)
+      {
+        print (1)
+      }
+      else
+      {
+        factorial(x)/(Diffactorial(x,y)*factorial(y))
+      }
+    }
+  }
 }
-```
-```{r}
-#Here is the test of the functions that I made.
-     #I did 48C33 and got the answer below.
-#I then did the actual function that is within R to check my answer
-     #The two answers are correct, which means my function must be correct as well.
 ```
 
 ```{r}
-pr <- as.integer(readpopulation())
-Please enter the total poplulation: 48
-cr <- as.integer(readpopulation())
-Please enter the total poplulation: 33
-Choosefinal(pr,cr)
-1.09326e+12
-choose(48,33)
-1.09326e+12
+#Here are the test scenarios that I created for my function that I made. I compared it to the R function that
+#already exists within Rstudio to make sure that my results were all correct.
+#I placed in some error checking within my code that will allow me deal with a wide array of possible input.
+#My function is the Choosefinal function and the R delivered function is the choose function.
+#The answers to the functions are below the function calls:
+Choosefinal(0,0)
+1
+choose(0,0)
+1
+Choosefinal(0,10)
+0
+choose(0,10)
+0
+Choosefinal(1,10)
+0
+choose(1,10)
+0
+Choosefinal(10,0)
+1
+choose(10,0)
+1
+Choosefinal(10,10)
+1
+choose(10,10)
+1
+Choosefinal(44,19)
+1.408831e+12
+choose(44,19)
+1.408831e+12
 ```

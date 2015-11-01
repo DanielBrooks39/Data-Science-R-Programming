@@ -96,6 +96,7 @@ Choosefinal <- function (x, y)
      #The two answers are correct, which means my function must be correct as well.
 ```
 
+```{r}
 pr <- as.integer(readpopulation())
 Please enter the total poplulation: 48
 cr <- as.integer(readpopulation())
@@ -104,15 +105,4 @@ Choosefinal(pr,cr)
 1.09326e+12
 choose(48,33)
 1.09326e+12
-
-
-  
-  
-
-  
-  
-  
-  
-
-
 ```

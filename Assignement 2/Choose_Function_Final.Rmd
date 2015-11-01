@@ -1,0 +1,118 @@
+---
+title: "Choose_Function_Final"
+author: "Dan Brooks"
+date: "November 1, 2015"
+output: pdf_document
+---
+
+
+```{r}
+#Assignment 2
+#Dan Brooks
+#This program will be used to calculate the choose function (nCr). It taked the total population "n" and
+#picks a subpopulation "r" from that population. It them calculates how many possible combinations are
+#there for picking "r" objects from "n" total objects (order doesn't matter)
+
+#readpopulation function has no parameters being passed to it and returns an integer value:
+     #Promots the user to enter in the total popluation for the problem
+     #Returns the population that was entered by the user
+readpopulation <- function()
+{
+  population <- readline(prompt = "Please enter the total poplulation: ")
+  return(population) 
+}
+
+#A variable that will hold the input from the readpopulation function
+pr <- as.integer(readpopulation())
+
+#readchoice function has no parameters being passed to it and returns an integer value
+     #Prompts the user to enter in the amount they would like to choose from the total population
+     #Returns the amount the user chose out of the total population
+readchoice <- function()
+{
+  choice <- readline(prompt = "Please enter the choice of of the total population: ")
+  return(choice)
+}
+
+#A variable that will hold the input from the readchoice function
+cr <- as.integer(readchoice())
+
+#factorial function will take one parameter being passed to it and returns an integer value
+     #This function will calculate the fatorial (!) of the value that is passed to it
+          #factorial is defined as: n! = n*(n-1)*(n-2)....*(2)*(1)
+     #It initialzes the solution to 1 (fact)
+     #It takes the soultion and multiplies it by the number that was passed into the function (x)
+     #Then we subtract 1 from the number being passed into the function
+     #The process is repeated until x is one (we do not need to multiply by one because it doesn't change the answer)
+factorial <- function(x)
+{
+  fact <- 1
+  while (x > 1)
+  {
+    fact <- fact * x
+    x <- x - 1
+  }
+  
+  return(fact)
+}
+
+#Diffactorial function will take two parameters being passed to it and returns an integer value
+     #This function will calculate the fatorial (!) of the difference of the two values passed to it
+          #Factorial is defined as: n! = n*(n-1)*(n-2)....*(2)*(1)
+     #Take the differnece of the two values that are passed to it (diff)
+     #It initialzes the solution to 1 (fact)
+     #It takes the soultion and multiplies it by the number that was passed into the function (x)
+     #Then we subtract 1 from the number being passed into the function
+     #The process is repeated until x is one (we do not need to multiply by one because it doesn't change the answer)
+Diffactorial <- function(x, y)
+{
+  diff <- (x-y)
+  fact <- 1
+  while (diff > 1)
+  {
+    fact <- fact * diff
+    diff <- diff - 1
+  }
+  
+  return(fact)
+}
+  
+#Choose function will take in two parameters being pased to it and calculate the combination of the two numbers
+     #The function will calculate the combination of the two numbers that were inputted from the user
+     #It will take the factorial of the population (factorial(x)) and divide it by the factorial of the 
+          #difference of the population and the number of choices (Diffactorial(x,y)) times the factorial
+          #of the number of choices (factorial(y)).
+     #It will give the anser for the total number of combinations for the number of choices out of a given 
+     #population.
+Choosefinal <- function (x, y)
+{
+  factorial(x)/(Diffactorial(x,y)*factorial(y))
+}
+```
+```{r}
+#Here is the test of the functions that I made.
+     #I did 48C33 and got the answer below.
+#I then did the actual function that is within R to check my answer
+     #The two answers are correct, which means my function must be correct as well.
+```
+
+pr <- as.integer(readpopulation())
+Please enter the total poplulation: 48
+cr <- as.integer(readpopulation())
+Please enter the total poplulation: 33
+Choosefinal(pr,cr)
+1.09326e+12
+choose(48,33)
+1.09326e+12
+
+
+  
+  
+
+  
+  
+  
+  
+
+
+```

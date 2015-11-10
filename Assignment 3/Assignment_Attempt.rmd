@@ -1,0 +1,975 @@
+---
+title: "Mushroom_Data"
+author: "Dan Brooks"
+date: "November 10, 2015"
+output: pdf_document
+---
+```{r}
+#This assignment takes in information from a website dedicated to Mushroom data. The purpose is to take the data and shape it into a way
+#that can be easily read by somebody else. The data consisted of letters. Each letter means something on the website but means nothing
+#within R. I deconstructed the data frame that the data was orginially inputted into. I converted each individual column into a
+#separate vector. I then did while loops on each indidvidual vetor to convert the data into something that has meaning. I then took each
+#of those individual vectors and bound them back into a data frame with the new information.
+
+#I attempted to change the data of the data frame outright but I could not get it to work. I then tried to make a variety of functions that would also make make code easy and more readable, but again that did not work. This is a bare bones method that is not possbile with large datasets but is managable with 23 columns.
+```
+
+```{r}
+theURL <- "https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data"
+Mushroom_Data_test <- read.csv(file = theURL, header=FALSE, sep=",")
+head(Mushroom_Data_test)
+names(Mushroom_Data_test) <- c("Edible?", "Cap Shape", "Cap Surf", "Cap Color", "Brusies?", "Odor", "Gill Attch", "Gill Space",
+                          "Gill Size", "Gill Color", "Stalk Shape", "Stalk Root", "Stalk Surface A. Ring",
+                          "Stalk Surface B. Ring", "Stalk Color A. Ring", "Stalk Color B. Ring", "Veil Type", "Veil Color",
+                          "Ring Num", "Ring Type", "Spore Color", "Population", "Habitat")
+Mushroom_Edible <- as.vector(as.character(Mushroom_Data_test$`Edible?`))
+Mushroom_Cap_Shape <- as.vector(as.character(Mushroom_Data_test$`Cap Shape`))
+Mushroom_Cap_Surf <- as.vector(as.character(Mushroom_Data_test$`Cap Surf`))
+Mushroom_Cap_Color <- as.vector(as.character(Mushroom_Data_test$`Cap Color`))
+Mushroom_Bruises <- as.vector(as.character(Mushroom_Data_test$`Brusies?`))
+Mushroom_Odor <- as.vector(as.character(Mushroom_Data_test$`Odor`))
+Mushroom_Gill_Attch <- as.vector(as.character(Mushroom_Data_test$`Gill Attch`))
+Mushroom_Gill_Space <- as.vector(as.character(Mushroom_Data_test$`Gill Space`))
+Mushroom_Gill_Size <- as.vector(as.character(Mushroom_Data_test$`Gill Size`))
+Mushroom_Gill_Color <- as.vector(as.character(Mushroom_Data_test$`Gill Color`))
+Mushroom_Stalk_Shape <- as.vector(as.character(Mushroom_Data_test$`Stalk Shape`))
+Mushroom_Stalk_Root <- as.vector(as.character(Mushroom_Data_test$`Stalk Root`))
+Mushroom_Stalk_Surf_A_Ring <- as.vector(as.character(Mushroom_Data_test$`Stalk Surface A. Ring`))
+Mushroom_Stalk_Surf_B_Ring <- as.vector(as.character(Mushroom_Data_test$`Stalk Surface B. Ring`))
+Mushroom_Stalk_Color_A_Ring <- as.vector(as.character(Mushroom_Data_test$`Stalk Color A. Ring`))
+Mushroom_Stalk_Color_B_Ring <- as.vector(as.character(Mushroom_Data_test$`Stalk Color B. Ring`))
+Mushroom_Veil_Type <- as.vector(as.character(Mushroom_Data_test$`Veil Type`))
+Mushroom_Veil_Color <- as.vector(as.character(Mushroom_Data_test$`Veil Color`))
+Mushroom_Ring_Num <- as.vector(as.character(Mushroom_Data_test$`Ring Num`))
+Mushroom_Ring_Type <- as.vector(as.character(Mushroom_Data_test$`Ring Type`))
+Mushroom_Spore_Color <- as.vector(as.character(Mushroom_Data_test$`Spore Color`))
+Mushroom_Population <- as.vector(as.character(Mushroom_Data_test$`Population`))
+Mushroom_Habitat <- as.vector(as.character(Mushroom_Data_test$`Habitat`))
+
+with(data.frame(Mushroom_Edible), replace(Mushroom_Edible, Mushroom_Edible == 'p', 'poison'))
+
+#Change the values of the edible vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Edible[index] == 'p')
+    {
+      Mushroom_Edible[index] <- 'Poison'
+    }
+    else
+    {
+      Mushroom_Edible[index] <- 'Edible'
+    }
+      index <- index + 1
+  }
+
+  #Changes the value of the Brusies vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Bruises[index] == 't')
+    {
+      Mushroom_Bruises[index] <- 'Bruises'
+    }
+    else
+    {
+      Mushroom_Bruises[index] <- 'None'
+    }
+    index <- index + 1
+  }
+
+  #Changes the value of the Cap Shape vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Cap_Shape[index] == 'b')
+    {
+      Mushroom_Cap_Shape[index] <- 'Bell'
+    }
+    else
+    {
+      if (Mushroom_Cap_Shape[index] == 'c')
+      {
+        Mushroom_Cap_Shape[index] = 'Conical'
+      }
+      else
+      {
+        if (Mushroom_Cap_Shape[index] == 'x')
+        {
+          Mushroom_Cap_Shape[index] = 'Convex'
+        }
+        else
+        {
+          if (Mushroom_Cap_Shape[index] == 'f')
+          {
+            Mushroom_Cap_Shape[index] = 'Flat'
+          }
+          else
+          {
+            if (Mushroom_Cap_Shape[index] == 'k')
+            {
+              Mushroom_Cap_Shape[index] = 'Knobbed'
+            }
+            else
+            {
+              Mushroom_Cap_Shape[index] = 'Sunken' 
+            }
+          }
+        }
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Changes the value of the Cap Surface Vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Cap_Surf[index] == 'f')
+    {
+      Mushroom_Cap_Surf[index] <- 'Fiborous'
+    }
+    else
+    {
+      if (Mushroom_Cap_Surf[index] == 'g')
+      {
+        Mushroom_Cap_Surf[index] = 'Grooves'
+      }
+      else
+      {
+        if (Mushroom_Cap_Surf[index] == 'y')
+        {
+          Mushroom_Cap_Surf[index] = 'Scaly'
+        }
+        else
+        {
+          Mushroom_Cap_Surf[index] = 'Smooth'
+        }
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Changes values of Cap Color vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Cap_Color[index] == 'n')
+    {
+      Mushroom_Cap_Color[index] <- 'Brown'
+    }
+    else
+    {
+      if (Mushroom_Cap_Color[index] == 'b')
+      {
+        Mushroom_Cap_Color[index] = 'Buff'
+      }
+      else
+      {
+        if (Mushroom_Cap_Color[index] == 'c')
+        {
+          Mushroom_Cap_Color[index] = 'Cinnamon'
+        }
+        else
+        {
+          if (Mushroom_Cap_Color[index] == 'g')
+          {
+            Mushroom_Cap_Color[index] = 'Grey'
+          }
+          else
+          {
+            if (Mushroom_Cap_Color[index] == 'r')
+            {
+              Mushroom_Cap_Color[index] = 'Green'
+            }
+            else
+            {
+              if (Mushroom_Cap_Color[index] == 'p')
+              {
+                Mushroom_Cap_Color[index] = 'Pink'
+              }
+              else
+              {
+                if(Mushroom_Cap_Color[index] == 'u')
+                {
+                  Mushroom_Cap_Color[index] = 'Purple'
+                }
+                else 
+                {
+                  if (Mushroom_Cap_Color[index] == 'e')
+                  {
+                    Mushroom_Cap_Color[index] = 'Red'
+                  }
+                  else
+                  {
+                    if (Mushroom_Cap_Color[index] == 'w')
+                    {
+                      Mushroom_Cap_Color[index] = 'White'
+                    }
+                    else
+                    {
+                      Mushroom_Cap_Color[index] = 'Yellow' 
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Changes values in the Odor vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Odor[index] == 'a')
+    {
+      Mushroom_Odor[index] <- 'Almond'
+    }
+    else
+    {
+      if (Mushroom_Odor[index] == 'l')
+      {
+        Mushroom_Odor[index] = 'Anise'
+      }
+      else
+      {
+        if (Mushroom_Odor[index] == 'c')
+        {
+          Mushroom_Odor[index] = 'Creosote'
+        }
+        else
+        {
+          if (Mushroom_Odor[index] == 'y')
+          {
+            Mushroom_Odor[index] = 'Fishy'
+          }
+          else
+          {
+            if (Mushroom_Odor[index] == 'f')
+            {
+              Mushroom_Odor[index] = 'Foul'
+            }
+            else
+            {
+              if (Mushroom_Odor[index] == 'm')
+              {
+                Mushroom_Odor[index] = 'Musty'
+              }
+              else
+              {
+                if(Mushroom_Odor[index] == 'n')
+                {
+                  Mushroom_Odor[index] = 'None'
+                }
+                else 
+                {
+                  if (Mushroom_Odor[index] == 'p')
+                  {
+                    Mushroom_Odor[index] = 'Pungent'
+                  }
+                  else
+                  {
+                    Mushroom_Odor[index] = 'Spicy'
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Changes the values of Gill Attachemnet vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Gill_Attch[index] == 'a')
+    {
+      Mushroom_Gill_Attch[index] <- 'Attached'
+    }
+    else
+    {
+      if (Mushroom_Gill_Attch[index] == 'd')
+      {
+        Mushroom_Gill_Attch[index] = 'Descending'
+      }
+      else
+      {
+        if (Mushroom_Gill_Attch[index] == 'f')
+        {
+          Mushroom_Gill_Attch[index] = 'Free'
+        }
+        else
+        {
+          Mushroom_Gill_Attch[index] = 'Notched'
+        }
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Changes the values of Gill Spacing vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Gill_Space[index] == 'c')
+    {
+      Mushroom_Gill_Space[index] <- 'Close'
+    }
+    else
+    {
+      if (Mushroom_Gill_Space[index] == 'w')
+      {
+        Mushroom_Gill_Space[index] = 'Crowded'
+      }
+      else
+      {
+        Mushroom_Gill_Space[index] = 'Distant'
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Changes the values of Gill Size Vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Gill_Size[index] == 'b')
+    {
+      Mushroom_Gill_Size[index] <- 'Broad'
+    }
+    else
+    {
+      Mushroom_Gill_Size[index] = 'Narrow'
+    }
+    index <- index + 1
+  }
+  
+  #Changes the value of Gill Color vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Gill_Color[index] == 'k')
+    {
+      Mushroom_Gill_Color[index] <- 'Black'
+    }
+    else
+    {
+      if (Mushroom_Gill_Color[index] == 'n')
+      {
+        Mushroom_Gill_Color[index] = 'Brown'
+      }
+      else
+      {
+        if (Mushroom_Gill_Color[index] == 'b')
+        {
+          Mushroom_Gill_Color[index] = 'Buff'
+        }
+        else
+        {
+          if (Mushroom_Gill_Color[index] == 'h')
+          {
+            Mushroom_Gill_Color[index] = 'Chocolate'
+          }
+          else
+          {
+            if (Mushroom_Gill_Color[index] == 'g')
+            {
+              Mushroom_Gill_Color[index] = 'Grey'
+            }
+            else
+            {
+              if (Mushroom_Gill_Color[index] == 'r')
+              {
+                Mushroom_Gill_Color[index] = 'Green'
+              }
+              else
+              {
+                if(Mushroom_Gill_Color[index] == 'o')
+                {
+                  Mushroom_Gill_Color[index] = 'Orange'
+                }
+                else 
+                {
+                  if (Mushroom_Gill_Color[index] == 'p')
+                  {
+                    Mushroom_Gill_Color[index] = 'Pink'
+                  }
+                  else
+                  {
+                    if(Mushroom_Gill_Color == 'u')
+                    {
+                      Mushroom_Gill_Color[index] = 'Purple'
+                    }
+                    else
+                    {
+                      if (Mushroom_Gill_Color[index] == 'e')
+                      {
+                        Mushroom_Gill_Color[index] = 'Red'
+                      }
+                      else
+                      {
+                        if (Mushroom_Gill_Color[index] == 'w')
+                        {
+                          Mushroom_Gill_Color[index] = 'White'
+                        }
+                        else
+                        {
+                          Mushroom_Gill_Color[index] = 'Yellow'
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Change values in Stalk Shape Vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Stalk_Shape[index] == 'e')
+    {
+      Mushroom_Stalk_Shape[index] <- 'Enlarging'
+    }
+    else
+    {
+      Mushroom_Stalk_Shape[index] <- 'Tapering'
+    }
+    index <- index + 1
+  }
+  
+  #Changes values in the Stalk Root Vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Stalk_Root[index] == 'b')
+    {
+      Mushroom_Stalk_Root[index] <- 'Bulbous'
+    }
+    else
+    {
+      if (Mushroom_Stalk_Root[index] == 'c')
+      {
+        Mushroom_Stalk_Root[index] = 'Club'
+      }
+      else
+      {
+        if (Mushroom_Stalk_Root[index] == 'u')
+        {
+          Mushroom_Stalk_Root[index] = 'Cup'
+        }
+        else
+        {
+          if (Mushroom_Stalk_Root[index] == 'e')
+          {
+            Mushroom_Stalk_Root[index] = 'Equal'
+          }
+          else
+          {
+            if (Mushroom_Stalk_Root[index] == 'z')
+            {
+              Mushroom_Stalk_Root[index] = 'Rhizomorphous'
+            }
+            else
+            {
+              if (Mushroom_Stalk_Root[index] == 'r')
+              {
+                Mushroom_Stalk_Root[index] = 'Rooted'
+              }
+              else
+              {
+                Mushroom_Stalk_Root[index] = 'Missing'
+              }
+            }
+          }
+        }
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Changes values for Stalk Surface above the Ring Vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Stalk_Surf_A_Ring[index] == 'f')
+    {
+      Mushroom_Stalk_Surf_A_Ring[index] <- 'Fiborous'
+    }
+    else
+    {
+      if (Mushroom_Stalk_Surf_A_Ring[index] == 'y')
+      {
+        Mushroom_Stalk_Surf_A_Ring[index] = 'Scaly'
+      }
+      else
+      {
+        if (Mushroom_Stalk_Surf_A_Ring[index] == 'k')
+        {
+          Mushroom_Stalk_Surf_A_Ring[index] = 'Silky'
+        }
+        else
+        {
+          Mushroom_Stalk_Surf_A_Ring[index] = 'Smooth' 
+        }
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Changes values for Stalk Surface Below the Ring Vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Stalk_Surf_B_Ring[index] == 'f')
+    {
+      Mushroom_Stalk_Surf_B_Ring[index] <- 'Fiborous'
+    }
+    else
+    {
+      if (Mushroom_Stalk_Surf_B_Ring[index] == 'y')
+      {
+        Mushroom_Stalk_Surf_B_Ring[index] = 'Scaly'
+      }
+      else
+      {
+        if (Mushroom_Stalk_Surf_B_Ring[index] == 'k')
+        {
+          Mushroom_Stalk_Surf_B_Ring[index] = 'Silky'
+        }
+        else
+        {
+          Mushroom_Stalk_Surf_B_Ring[index] = 'Smooth' 
+        }
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Changes the values in Stalk Color Above the Rim Vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Stalk_Color_A_Ring[index] == 'n')
+    {
+      Mushroom_Stalk_Color_A_Ring[index] <- 'Brown'
+    }
+    else
+    {
+      if (Mushroom_Stalk_Color_A_Ring[index] == 'b')
+      {
+        Mushroom_Stalk_Color_A_Ring[index] = 'Buff'
+      }
+      else
+      {
+        if (Mushroom_Stalk_Color_A_Ring[index] == 'c')
+        {
+          Mushroom_Stalk_Color_A_Ring[index] = 'Cinnamon'
+        }
+        else
+        {
+          if (Mushroom_Stalk_Color_A_Ring[index] == 'g')
+          {
+            Mushroom_Stalk_Color_A_Ring[index] = 'Grey'
+          }
+          else
+          {
+            if (Mushroom_Stalk_Color_A_Ring[index] == 'o')
+            {
+              Mushroom_Stalk_Color_A_Ring[index] = 'Orange'
+            }
+            else
+            {
+              if (Mushroom_Stalk_Color_A_Ring[index] == 'p')
+              {
+                Mushroom_Stalk_Color_A_Ring[index] = 'Pink'
+              }
+              else
+              {
+                if(Mushroom_Stalk_Color_A_Ring[index] == 'e')
+                {
+                  Mushroom_Stalk_Color_A_Ring[index] = 'Red'
+                }
+                else 
+                {
+                  if (Mushroom_Stalk_Color_A_Ring[index] == 'w')
+                  {
+                    Mushroom_Stalk_Color_A_Ring[index] = 'White'
+                  }
+                  else
+                  {
+                    Mushroom_Stalk_Color_A_Ring[index] = 'Yellow'
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Changes the values in Stalk Color Below the Rim Vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Stalk_Color_B_Ring[index] == 'n')
+    {
+      Mushroom_Stalk_Color_B_Ring[index] <- 'Brown'
+    }
+    else
+    {
+      if (Mushroom_Stalk_Color_B_Ring[index] == 'b')
+      {
+        Mushroom_Stalk_Color_B_Ring[index] = 'Buff'
+      }
+      else
+      {
+        if (Mushroom_Stalk_Color_B_Ring[index] == 'c')
+        {
+          Mushroom_Stalk_Color_B_Ring[index] = 'Cinnamon'
+        }
+        else
+        {
+          if (Mushroom_Stalk_Color_B_Ring[index] == 'g')
+          {
+            Mushroom_Stalk_Color_B_Ring[index] = 'Grey'
+          }
+          else
+          {
+            if (Mushroom_Stalk_Color_B_Ring[index] == 'o')
+            {
+              Mushroom_Stalk_Color_B_Ring[index] = 'Orange'
+            }
+            else
+            {
+              if (Mushroom_Stalk_Color_B_Ring[index] == 'p')
+              {
+                Mushroom_Stalk_Color_B_Ring[index] = 'Pink'
+              }
+              else
+              {
+                if(Mushroom_Stalk_Color_B_Ring[index] == 'e')
+                {
+                  Mushroom_Stalk_Color_B_Ring[index] = 'Red'
+                }
+                else 
+                {
+                  if (Mushroom_Stalk_Color_B_Ring[index] == 'w')
+                  {
+                    Mushroom_Stalk_Color_B_Ring[index] = 'White'
+                  }
+                  else
+                  {
+                    Mushroom_Stalk_Color_B_Ring[index] = 'Yellow'
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Changes the values of the Veil Type Vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Veil_Type[index] == 'p')
+    {
+      Mushroom_Veil_Type[index] = 'Partial'
+    }
+    else
+    {
+      Mushroom_Veil_Type[index] = 'Unviversal'
+    }
+  index <- index + 1
+  }
+  
+  #Changes the values of the Veil Color Vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Veil_Color[index] == 'n')
+    {
+      Mushroom_Veil_Color[index] = 'Brown'
+    }
+    else
+    {
+      if (Mushroom_Veil_Color[index] == 'o')
+      {
+        Mushroom_Veil_Color[index] = 'Orange'
+      }
+      else
+      {
+        if (Mushroom_Veil_Color[index] == 'w')
+        {
+          Mushroom_Veil_Color[index] = 'White'
+        }
+        else
+        {
+          Mushroom_Veil_Color[index] = 'Yellow'
+        }
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Changes the values of the Ring Number Vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Ring_Num[index] == 'o')
+    {
+      Mushroom_Ring_Num[index] = 'One'
+    }
+    else
+    {
+      if (Mushroom_Ring_Num[index] == 't')
+      {
+        Mushroom_Ring_Num[index] = 'Two'
+      }
+      else
+      {
+        Mushroom_Ring_Num[index] = 'None'
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Changes the values in Ring Type Vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Ring_Type[index] == 'c')
+    {
+      Mushroom_Ring_Type[index] <- 'Cobwebby'
+    }
+    else
+    {
+      if (Mushroom_Ring_Type[index] == 'e')
+      {
+        Mushroom_Ring_Type[index] = 'Evanescent'
+      }
+      else
+      {
+        if (Mushroom_Ring_Type[index] == 'f')
+        {
+          Mushroom_Ring_Type[index] = 'Flaring'
+        }
+        else
+        {
+          if (Mushroom_Ring_Type[index] == 'l')
+          {
+            Mushroom_Ring_Type[index] = 'Large'
+          }
+          else
+          {
+            if (Mushroom_Ring_Type[index] == 'n')
+            {
+              Mushroom_Ring_Type[index] = 'None'
+            }
+            else
+            {
+              if (Mushroom_Ring_Type[index] == 'p')
+              {
+                Mushroom_Ring_Type[index] = 'Pendant'
+              }
+              else
+              {
+                if(Mushroom_Ring_Type[index] == 's')
+                {
+                  Mushroom_Ring_Type[index] = 'Sheathing'
+                }
+                else 
+                {
+                  Mushroom_Ring_Type[index] = 'Zone'
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Changes the values in Spore Color Vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Spore_Color[index] == 'k')
+    {
+      Mushroom_Spore_Color[index] <- 'Black'
+    }
+    else
+    {
+      if (Mushroom_Spore_Color[index] == 'n')
+      {
+        Mushroom_Spore_Color[index] = 'Brown'
+      }
+      else
+      {
+        if (Mushroom_Spore_Color[index] == 'b')
+        {
+          Mushroom_Spore_Color[index] = 'Buff'
+        }
+        else
+        {
+          if (Mushroom_Spore_Color[index] == 'h')
+          {
+            Mushroom_Spore_Color[index] = 'Chocolate'
+          }
+          else
+          {
+            if (Mushroom_Spore_Color[index] == 'r')
+            {
+              Mushroom_Spore_Color[index] = 'Green'
+            }
+            else
+            {
+              if (Mushroom_Spore_Color[index] == 'o')
+              {
+                Mushroom_Spore_Color[index] = 'Orange'
+              }
+              else
+              {
+                if(Mushroom_Spore_Color[index] == 'u')
+                {
+                  Mushroom_Spore_Color[index] = 'Purple'
+                }
+                else 
+                {
+                  if (Mushroom_Spore_Color[index] == 'w')
+                  {
+                    Mushroom_Spore_Color[index] = 'White'
+                  }
+                  else
+                  {
+                    Mushroom_Spore_Color[index] = 'Yellow' 
+                  }
+               }
+              }
+            }
+          }
+        }
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Changes the values in population Vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Population[index] == 'a')
+    {
+      Mushroom_Population[index] <- 'Abundant'
+    }
+    else
+    {
+      if (Mushroom_Population[index] == 'c')
+      {
+        Mushroom_Population[index] = 'Clustered'
+      }
+      else
+      {
+        if (Mushroom_Population[index] == 'n')
+        {
+          Mushroom_Population[index] = 'Numerous'
+        }
+        else
+        {
+          if (Mushroom_Population[index] == 's')
+          {
+            Mushroom_Population[index] = 'Scattered'
+          }
+          else
+          {
+            if (Mushroom_Population[index] == 'v')
+            {
+              Mushroom_Population[index] = 'Several'
+            }
+            else
+            {
+              Mushroom_Population[index] = "Solitary"
+            }
+          }
+        }
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Changes the values in habitat Vector
+  index <- 1
+  while (index <= 8124)
+  {
+    if (Mushroom_Habitat[index] == 'g')
+    {
+      Mushroom_Habitat[index] <- 'Grasses'
+    }
+    else
+    {
+      if (Mushroom_Habitat[index] == 'l')
+      {
+        Mushroom_Habitat[index] = 'Leaves'
+      }
+      else
+      {
+        if (Mushroom_Habitat[index] == 'm')
+        {
+          Mushroom_Habitat[index] = 'Meadows'
+        }
+        else
+        {
+          if (Mushroom_Habitat[index] == 'p')
+          {
+            Mushroom_Habitat[index] = 'Paths'
+          }
+          else
+          {
+            if (Mushroom_Habitat[index] == 'u')
+            {
+              Mushroom_Habitat[index] = 'Urban'
+            }
+            else
+            {
+              Mushroom_Habitat[index] = 'Woods'
+            }
+          }
+        }
+      }
+    }
+    index <- index + 1
+  }
+  
+  #Combine each of the individual vectors back into one data fram.
+  output <- cbind.data.frame(Mushroom_Edible, Mushroom_Cap_Shape, Mushroom_Cap_Surf, Mushroom_Cap_Color, Mushroom_Bruises, 
+                             Mushroom_Odor, Mushroom_Gill_Attch, Mushroom_Gill_Space, Mushroom_Gill_Size, Mushroom_Gill_Color, 
+                             Mushroom_Stalk_Shape, Mushroom_Stalk_Root, Mushroom_Stalk_Surf_A_Ring, Mushroom_Stalk_Surf_B_Ring, 
+                             Mushroom_Stalk_Color_A_Ring, Mushroom_Stalk_Color_B_Ring, Mushroom_Veil_Type, Mushroom_Veil_Color, 
+                             Mushroom_Ring_Num, Mushroom_Ring_Type, Mushroom_Spore_Color, Mushroom_Population, Mushroom_Habitat)
+  names(output) <- c("Edible?", "Cap Shape", "Cap Surf", "Cap Color", "Brusies?", "Odor", "Gill Attch", "Gill Space",
+                    "Gill Size", "Gill Color", "Stalk Shape", "Stalk Root", "Stalk Surface A. Ring",
+                    "Stalk Surface B. Ring", "Stalk Color A. Ring", "Stalk Color B. Ring", "Veil Type", "Veil Color",
+                    "Ring Num", "Ring Type", "Spore Color", "Population", "Habitat")
+  View(output)
+  
+```
